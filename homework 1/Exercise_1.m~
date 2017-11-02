@@ -37,15 +37,15 @@ T7_0=[1  0  0 0.5;
       0  0 -1 0.4
       0  0  0 1];
 
-rot90z=[0 -1 0 0;
-        1  0 0 0;
+rotneg90z=[0 1 0 0;
+        -1  0 0 0;
         0  0 1 0;
         0  0 0 1];
     
 T8_0=[1  0 0 -0.5;
       0 -1 0  0.3;
       0 -1 0  0.4;
-      0  0 0  1  ]*rot90z;  %todo flip since absolute? 
+      0  0 0  1  ]*rotneg90z;  %todo flip since absolute? 
 
 Transformation_structure_1(:,:,1)=T1_0;
 Transformation_structure_1(:,:,2)=T2_0;
@@ -91,7 +91,7 @@ H4_0=T4_0;
 H5_0=[-1 0  0 -0.5;
        0 1  0 -0.3;
        0 0 -1  0.4;
-       0 0  0  1]* rot90z;
+       0 0  0  1 ]* rotneg90z; %todo: reverse?
 H6_0=T6_0;
 H7_0=T7_0;
 H8_0=T8_0;
@@ -115,6 +115,29 @@ plotCage(Transformation_structure_2);
 % 
 % Ri_0=...
 % pi_0=...
+R1_0 = H1_0(1:3, 1:3);
+p1_0 = H1_0(1:3, 4);
+
+R2_0 = H2_0(1:3, 1:3);
+p2_0 = H2_0(1:3, 4);
+
+R3_0 = H3_0(1:3, 1:3);
+p3_0 = H3_0(1:3, 4);
+
+R4_0 = H4_0(1:3, 1:3);
+p4_0 = H4_0(1:3, 4);
+
+R5_0 = H5_0(1:3, 1:3);
+p5_0 = H5_0(1:3, 4);
+
+R6_0 = H6_0(1:3, 1:3);
+p6_0 = H6_0(1:3, 4);
+
+R7_0 = H7_0(1:3, 1:3);
+p7_0 = H7_0(1:3, 4);
+
+R8_0 = H8_0(1:3, 1:3);
+p8_0 = H8_0(1:3, 4);
 
 
 %% Question 5: Simple Euler angles without considering singularities
@@ -123,7 +146,14 @@ plotCage(Transformation_structure_2);
 % Represent each rotation matrix as a set of Euler angles (roll-pitch-yaw)
 
 % [phi_i,theta_i,psi_i]=R2EulerA(Ri_0)
-
+[phi_1,theta_1,psi_1]=R2EulerA(R1_0);
+[phi_2,theta_2,psi_2]=R2EulerA(R2_0);
+[phi_3,theta_3,psi_3]=R2EulerA(R3_0);
+[phi_4,theta_4,psi_4]=R2EulerA(R4_0);
+[phi_5,theta_5,psi_5]=R2EulerA(R5_0);
+[phi_6,theta_6,psi_6]=R2EulerA(R6_0);
+[phi_7,theta_7,psi_7]=R2EulerA(R7_0);
+[phi_8,theta_8,psi_8]=R2EulerA(R8_0);
 
 
 %% Question 6: Relative Homogeneous Transformations (manually Generated)
@@ -132,14 +162,17 @@ plotCage(Transformation_structure_2);
 % Compute manually the the relative transformations between the corners of
 % the cage
 
-H1_0= eye(4);
-H2_1= eye(4);
-H3_2= eye(4);
-H4_3= eye(4);
-H5_4= eye(4);
-H6_5= eye(4);
-H7_6= eye(4);
-H8_7= eye(4);
+H1_0= [1 0 0 -0.5;
+       0 1 0 -0.3;
+       0 0 1 -0.4;
+       0 0 0  1];
+H2_1= invHT(H1_0)*H2_0
+H3_2= invHT(H2_0)*H3_0
+H4_3= invHT(H3_0)*H4_0;
+H5_4= invHT(H4_0)*H5_0;
+H6_5= invHT(H5_0)*H6_0;
+H7_6= invHT(H6_0)*H7_0;
+H8_7= invHT(H7_0)*H8_0;
 
 %% Question 7: Absolute Transfomations using the relative transformations
 
