@@ -101,10 +101,10 @@ Tcm4_0 = T3_0*Tcm4_3;
 
 
 % TODO: Homogeneous Transformations wrt World frame (Numeric computation)
-Tcm1_W = T0_W*Tcm1_0;
-Tcm2_W = T0_W*Tcm2_0;
-Tcm3_W = T0_W*Tcm3_0;
-Tcm4_W = T0_W*Tcm4_0;
+Tcm1_W = T_0;
+Tcm2_W=eye(4);
+Tcm3_W=eye(4);
+Tcm4_W=eye(4);
 
 
 %DRAW CFs CMs
